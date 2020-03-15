@@ -11,7 +11,9 @@ router.post('/register', (req, res, next) => {
     name: req.body.name,
     email: req.body.email,
     username: req.body.username,
-    password: req.body.password
+    password: req.body.password,
+    phoneNum: req.body.phoneNum,
+    address: req.body.address
   });
 
   User.addUser(newUser, (err, user) => {
@@ -43,12 +45,14 @@ router.post('/authenticate', (req, res, next) => {
 
         res.json({
           success: true,
-          token: ' JWT ' + token,
+          token: ' jwt ' + token,
           user: {
             id: user._id,
             name: user.name,
             username: user.username,
-            email: user.email
+            email: user.email,
+            phoneNum : user.phoneNum,
+            address: user.address
           }
         });
       } else {
