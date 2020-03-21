@@ -1,2 +1,9 @@
 <h2>Smart Water Management System</h2>
 <p>Welcome to Smart Water Management System</p>
+<form (submit)="onDataSubmit()">
+    <div class="form-group">
+      <label>Data*</label>
+      <input type="text" [(ngModel)] = "data" name="data" class = "form-control">
+    </div>
+    <input type="submit" class="btn btn-primary" value="Enter">
+</form>

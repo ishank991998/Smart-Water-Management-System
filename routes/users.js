@@ -74,4 +74,16 @@ router.get('/profile', passport.authenticate('jwt', { session: false }), (req, r
   });
 });
 
+router.post('/dashboard',(req, res, next) => {
+  const data = parseInt(req.body.data);
+
+  res.json({
+    success: true,
+    token: ' jwt ' + token,
+    user: {
+      data: user.data
+    }
+  });
+});
+
 module.exports = router;
