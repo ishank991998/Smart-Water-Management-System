@@ -43,13 +43,6 @@ export class AuthService {
     this.user = user;
   }
 
-  registerData(data){
-    let headers = new Headers();
-    headers.append('Content-Type','application/json');
-    return this.http.post('users/dashboard',data,{headers: headers})
-    .map(res => res.json());
-  }
-
   loadToken(){
     const token = localStorage.getItem('id_token');
     this.authToken = token;
