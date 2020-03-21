@@ -74,8 +74,5 @@ router.get('/profile', passport.authenticate('jwt', { session: false }), (req, r
   });
 });
 
-router.get('/dashboard',(req, res, next) => {
-  res.json('Hey');
-});
 
 module.exports = router;
