@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
   }
 
   onLoginSubmit(){
+    console.log('Button Clicked')
     const user = {
       username : this.username,
       password : this.password
@@ -28,16 +29,18 @@ export class LoginComponent implements OnInit {
 
     this.authService.authenticateUser(user).subscribe(data => {
       if(data.success){
+        console.log('success');
         this.authService.storeUserData(data.token, data.user);
         this.flashMessage.show('Logged in successfully', {
           cssClass : 'alert-success',
           timeout : 5000});        
-        this.router.navigate(['\dashboard']);
+        this.router.navigate(['profile']);
       }else{
+        console.log('success');
         this.flashMessage.show(data.msg, {
           cssClass : 'alert-danger',
           timeout : 5000});        
-        this.router.navigate(['\login']);  
+        this.router.navigate(['login']);  
       }
     });
   }

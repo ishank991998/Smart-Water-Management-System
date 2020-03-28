@@ -28,6 +28,7 @@ export class RegisterComponent implements OnInit {
   }
 
   onRegisterSubmit(){
+    console.log('Button Clicked')
     const user = {
       name: this.name,
       username: this.username,
