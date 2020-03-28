@@ -4,6 +4,10 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const User = require('../models/user');
+//const Data = require('../models/user');
+const mongoose = require('mongoose');
+//const configData = require('../config/database1');
+//const Data = require('../models/data');
 
 // Register
 router.post('/register', (req, res, next) => {
@@ -72,7 +76,29 @@ router.get('/profile', passport.authenticate('jwt', { session: false }), (req, r
       email: req.user.email,
     }
   });
+  //Console.post(user);
 });
+
+router.post('/dashboard',(req,res,next) => {
+  let newData = ({
+    //username: req.body.username,
+    data: req.body.data,
+    time: Date.now()
+  });
+
+  
+
+  User.addData(newData, (err, data) => {
+    if (err) {
+      res.json({ success: false, msg: 'Failed to store data' });
+    } else {
+      res.json({ success: true, msg: 'Data stored' });
+    }
+  });
+  
+
+});
+
 
 
 module.exports = router;

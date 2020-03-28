@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const config = require('../config/database');
+//const Data = require('../models/data');
 
 //UserSchema
+
 const UserSchema = mongoose.Schema({
     name: {
         type: String
@@ -13,7 +15,8 @@ const UserSchema = mongoose.Schema({
     },
     username: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     password: {
         type: String,
@@ -27,18 +30,47 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: true
     }
+    ,
+    waterData:{
+        type: [{
+            username: {
+                type: String,
+                required: true
+            },
+            data: {
+                type: Number,
+                required: true
+            },
+            time: {
+                type: Date,
+                required: true
+            }
+        }],
+        required : true
+    }
 });
 
 const User = module.exports = mongoose.model('User', UserSchema);
 
 module.exports.getUserById = function(id,callback){
     User.findById(id,callback);
-    console.log('2');
 }
 
 module.exports.getUserByUsername = function(username,callback){
     const query = {username:username}
-    User.findOne(query,callback);
+    //console.log(query);
+    //console.log(User.findOne(query,callback));
+    //User.findOne(query,callback)
+
+    User.findOne(query,function(err, doc) {
+        if (err) throw err
+          if (doc) {
+            console.log(doc.username);
+            return JSON.parse(JSON.stringify(doc));
+        }
+        });
+    //console.log(callback);
+
 }
 
 module.exports.addUser = function(newUser, callback){
@@ -56,4 +88,27 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
         if(err)throw err;
         callback(null, isMatch);
     });    
+}
+
+
+module.exports.addData = function(newData, callback){
+    //user1 : Object;
+    //console.log(newData);
+    //console.log(newData.username);
+    const userN = newData.username;
+    const query = {username:userN}
+    User.findOne(query,function(err, doc) {
+        if (err) throw err
+          if (doc) {
+            console.log(doc.username);
+            doc.waterData = newData;
+            doc.save(callback);
+        }
+        });
+    //user1 = User.getUserByUsername(userN);
+    //console.log(user1.type);
+    //console.log(user1);
+    //user1.waterData = newData;
+    //user1.save(callback);
+    
 }

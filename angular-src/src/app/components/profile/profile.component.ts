@@ -11,13 +11,14 @@ export class ProfileComponent implements OnInit {
   user: Object;
 
   constructor(
-    private authServive: AuthService,
+    private authService: AuthService,
     private router : Router
   ) { }
 
   ngOnInit() {
-    this.authServive.getProfile().subscribe(profile => {
+    this.authService.getProfile().subscribe(profile => {
       this.user = profile.user;
+      
     },
     err => {
       console.log(err);
