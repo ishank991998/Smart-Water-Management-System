@@ -4,10 +4,6 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const User = require('../models/user');
-//const Data = require('../models/user');
-const mongoose = require('mongoose');
-//const configData = require('../config/database1');
-//const Data = require('../models/data');
 
 // Register
 router.post('/register', (req, res, next) => {
@@ -33,20 +29,27 @@ router.post('/register', (req, res, next) => {
 router.post('/authenticate', (req, res, next) => {
   const username = req.body.username;
   const password = req.body.password;
-
+  //console.log(username);
+  //console.log('in users.auth');
   User.getUserByUsername(username, (err, user) => {
-    if (err) throw err;
+    if (err) {
+      console.log(err);
+      throw err;
+    }
     if (!user) {
+      console.log('user not found');
       return res.json({ success: false, msg: 'User not found' });
     }
 
     User.comparePassword(password, user.password, (err, isMatch) => {
       if (err) throw err;
       if (isMatch) {
+        console.log('matched Pwd');
         const token = jwt.sign({ data: user }, config.secret, {
           expiresIn: 604800 // 1 week
         });
 
+        console.log('inside comparePwd');
         res.json({
           success: true,
           token: ' jwt ' + token,
@@ -60,6 +63,7 @@ router.post('/authenticate', (req, res, next) => {
           }
         });
       } else {
+        console.log('wrong pwd');
         return res.json({ success: false, msg: 'Wrong password' });
       }
     });
@@ -81,17 +85,20 @@ router.get('/profile', passport.authenticate('jwt', { session: false }), (req, r
 
 router.post('/dashboard',(req,res,next) => {
   let newData = ({
-    //username: req.body.username,
+    username: req.body.username,
     data: req.body.data,
     time: Date.now()
   });
 
-  
+  console.log(newData);
+  console.log(newData + '  : inside backend dashboard');
 
   User.addData(newData, (err, data) => {
     if (err) {
+      console.log(err);
       res.json({ success: false, msg: 'Failed to store data' });
     } else {
+      console.log('stored data')
       res.json({ success: true, msg: 'Data stored' });
     }
   });

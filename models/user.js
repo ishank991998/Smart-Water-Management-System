@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const config = require('../config/database');
-//const Data = require('../models/data');
 
 //UserSchema
+data = Number;
+time = Date;
+username = String;
 
 const UserSchema = mongoose.Schema({
     name: {
@@ -29,14 +31,32 @@ const UserSchema = mongoose.Schema({
     address: {
         type: String,
         required: true
-    }
-    ,
+    },
+    /*
+    waterData:{
+        type: Array,
+        items: {
+            type: Object,
+            properties: {
+                username: {
+                    type: String,
+                    required: true
+                },
+                data: {
+                    type: Number,
+                    required: true
+                },
+                time: {
+                    type: Date,
+                    required: true
+                }
+            }
+        },
+        required : true
+    }*/
+    
     waterData:{
         type: [{
-            username: {
-                type: String,
-                required: true
-            },
             data: {
                 type: Number,
                 required: true
@@ -48,6 +68,28 @@ const UserSchema = mongoose.Schema({
         }],
         required : true
     }
+    /*
+    waterData: {
+        type: Array,
+        items: {$ref : '#/definitions/modelData'}
+    },
+    definitions:{
+        modelData:{
+            type: Object,
+            properties: {
+                username:{
+                    type: String
+                },
+                data: {
+                    type: Number
+                },
+                time: {
+                    type: Date
+                }
+            },
+            required:[username,data,time]
+        }
+    }*/
 });
 
 const User = module.exports = mongoose.model('User', UserSchema);
@@ -58,11 +100,10 @@ module.exports.getUserById = function(id,callback){
 
 module.exports.getUserByUsername = function(username,callback){
     const query = {username:username}
-    //console.log(query);
-    //console.log(User.findOne(query,callback));
-    //User.findOne(query,callback)
+    
+    User.findOne(query,callback)
 
-    User.findOne(query,function(err, doc) {
+    /*User.findOne(query,function(err, doc) {
         if (err) throw err
           if (doc) {
             console.log(doc.username);
@@ -70,7 +111,7 @@ module.exports.getUserByUsername = function(username,callback){
         }
         });
     //console.log(callback);
-
+*/
 }
 
 module.exports.addUser = function(newUser, callback){
@@ -92,16 +133,21 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
 
 
 module.exports.addData = function(newData, callback){
-    //user1 : Object;
-    //console.log(newData);
+    user1 = JSON;
+    console.log(newData);
     //console.log(newData.username);
     const userN = newData.username;
     const query = {username:userN}
     User.findOne(query,function(err, doc) {
         if (err) throw err
           if (doc) {
-            console.log(doc.username);
-            doc.waterData = newData;
+            user1 = {
+                data : newData.data,
+                time : newData.time
+            }
+            //doc.waterData.data = newData.data;
+            //doc.waterData.time = newData.time;
+            doc.waterData.push(user1);
             doc.save(callback);
         }
         });

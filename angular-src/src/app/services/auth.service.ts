@@ -23,6 +23,8 @@ export class AuthService {
     console.log('in Authentication');
     let headers = new Headers();
     headers.append('Content-Type','application/json');
+    //console.log(headers);
+    //console.log(this.http.post('http://localhost:3000/users/authenticate',user,{headers: headers}))
     return this.http.post('http://localhost:3000/users/authenticate',user,{headers: headers})
     .map(res => res.json());
   }

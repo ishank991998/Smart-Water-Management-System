@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import {FlashMessagesService} from 'angular2-flash-messages';
 import {AuthService} from '../../services/auth.service';
 
 @Component({
@@ -8,27 +8,32 @@ import {AuthService} from '../../services/auth.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  username: String;
-  data: Number;
-  time: Date;
-  tempUser : Object;  
-  tU: Object;
-  
+  data : Number;
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private flashMessage: FlashMessagesService
     ) { }
 
   ngOnInit() {
   }
 
-  onRegisterSubmit(){
+  onDataSubmit(){
     const user = {
-    //username:  this.authService.getUsername(),// this.tempUser[property],
+    username: this.authService.getUsername(),  
     data: this.data
     }
-    console.log('in Register submit');
+    console.log('in Data submit');
     //console.log(user.username + '....' + user.data);
 
-    this.authService.storeWaterData(user);
+    this.authService.storeWaterData(user).subscribe((data1: any) => {
+      if(data1.success){
+        console.log('Inside subscribe data');
+        this.flashMessage.show('Data stored successfully' , {cssClass:'alert-success',timeout:3000});
+        
+      } else {
+        this.flashMessage.show("Something went wrong" , {cssClass:'alert-danger',timeout:3000});
+        
+      }
+    });
   }
 }
