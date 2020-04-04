@@ -59,7 +59,8 @@ router.post('/authenticate', (req, res, next) => {
             username: user.username,
             email: user.email,
             phoneNum : user.phoneNum,
-            address: user.address
+            address: user.address,
+            waterData : user.waterData
           }
         });
       } else {
@@ -78,6 +79,9 @@ router.get('/profile', passport.authenticate('jwt', { session: false }), (req, r
       name: req.user.name,
       username: req.user.username,
       email: req.user.email,
+      phoneNum : req.user.phoneNum,
+      address: req.user.address,
+      waterData : req.user.waterData
     }
   });
   //Console.post(user);

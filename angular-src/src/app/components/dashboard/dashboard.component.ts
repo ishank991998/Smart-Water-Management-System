@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FlashMessagesService} from 'angular2-flash-messages';
 import {AuthService} from '../../services/auth.service';
 
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -11,7 +12,8 @@ export class DashboardComponent implements OnInit {
   data : Number;
   constructor(
     private authService: AuthService,
-    private flashMessage: FlashMessagesService
+    private flashMessage: FlashMessagesService,
+     
     ) { }
 
   ngOnInit() {
