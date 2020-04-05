@@ -3,8 +3,9 @@
   <h1>Smart Water Management System</h1>
   <p class="lead">Welcome to Smart Water Management System <br> developed by <br> Ishan Khichadia - 2018210072 <br>Dhrumil Parikh - 2018210075 <br>Yash Rathod - 2018210077</p>
   <div>
-    <a class="btn btn-primary" [routerLink]="['/register']">Register</a>
-    <a class="btn btn-primary" [routerLink]="['/login']">Login</a>
+    <a *ngIf = "!authService.loggedIn()" class="btn btn-primary" [routerLink]="['/register']">Register</a>
+    <a *ngIf = "!authService.loggedIn()" class="btn btn-primary" [routerLink]="['/login']">Login</a>
+    <a *ngIf = "authService.loggedIn()" class="btn btn-primary" [routerLink]="['/login']">Logout</a>
   </div>
 </div>
 
