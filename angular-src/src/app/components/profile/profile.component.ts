@@ -13,6 +13,7 @@ export class ProfileComponent implements OnInit {
   time = [];
   user = JSON;
   x = String;
+  totalData : Number;
 
   constructor(
     private authService: AuthService,
@@ -22,9 +23,14 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.authService.getProfile().subscribe(profile => {
+      this.totalData = 0;
+      this.user = profile.user;
       for(var i in profile.user.waterData){
-        this.data1.push(profile.user.waterData[i].data);
-        this.time.push(profile.user.waterData[i].time);
+        let data = profile.user.waterData[i].data;
+        this.data1.push(data);
+        this.totalData = this.totalData+data;
+        let time = (profile.user.waterData[i].time);
+        this.time.push(new Date(Date.now()));
       }
       this.x = profile.user.name;
     //  this.user = profile.user;
@@ -49,7 +55,7 @@ export class ProfileComponent implements OnInit {
         }]
       },
       options:{
-        
+        responsive: true
       }
     });
 

@@ -134,8 +134,10 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
 
 module.exports.addData = function(newData, callback){
     user1 = JSON;
-    console.log(newData);
-    //console.log(newData.username);
+    //console.log(newData.time);
+    let date1 = new Date(newData.time);
+    //date1 = date1 + 19800000;
+    console.log(date1);
     const userN = newData.username;
     const query = {username:userN}
     User.findOne(query,function(err, doc) {
@@ -143,8 +145,9 @@ module.exports.addData = function(newData, callback){
           if (doc) {
             user1 = {
                 data : newData.data,
-                time : newData.time
+                time : date1
             }
+            console.log(user1);
             //doc.waterData.data = newData.data;
             //doc.waterData.time = newData.time;
             doc.waterData.push(user1);

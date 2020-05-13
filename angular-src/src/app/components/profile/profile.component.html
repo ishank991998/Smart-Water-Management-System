@@ -10,7 +10,25 @@
   </head>
 
 <body>
-
+  <div class="card">
+    <h3 class="card-header bg-primary text-white">Profile</h3>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-6">Name</dt>
+            <dd class="col-sm-6">{{user.name}}</dd>
+            <dt class="col-sm-6">Username</dt>
+            <dd class="col-sm-6">{{user.username}}</dd>
+            <dt class="col-sm-6">Email</dt>
+            <dd class="col-sm-6">{{user.email}}</dd>
+            <dt class="col-sm-6">Phone Number</dt>
+            <dd class="col-sm-6">{{user.phoneNum}}</dd>
+            <dt class="col-sm-6">Address</dt>
+            <dd class="col-sm-6">{{user.address}}</dd>
+            <dt class="col-sm-6">Total Water Consumption</dt>
+            <dd class="col-sm-6">{{totalData}} litres</dd>
+        </dl>
+    </div>
+</div>
   <div class="container" style="position: relative; height:40vh; width:80vw">
     <canvas id = "myChart" ></canvas> 
   </div>
