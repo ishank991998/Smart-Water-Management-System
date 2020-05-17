@@ -8,6 +8,8 @@
     "start": "node app"
   },
   "dependencies": {
+    "admin-bro": "^2.3.1",
+    "admin-bro-expressjs": "^2.0.5",
     "bcryptjs": "*",
     "body-parser": "*",
     "chart.js": "^2.9.3",

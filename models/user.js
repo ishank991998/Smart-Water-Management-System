@@ -135,16 +135,18 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
 module.exports.addData = function(newData, callback){
     user1 = JSON;
     //console.log(newData.time);
-    let date1 = new Date(newData.time);
+    var date1 = new Date(Date.now()).toLocaleString('en-US', {timeZone: 'Asia/Calcutta'});
     //date1 = date1 + 19800000;
     console.log(date1);
     const userN = newData.username;
     const query = {username:userN}
+    const data1 = newData.data
     User.findOne(query,function(err, doc) {
         if (err) throw err
           if (doc) {
+            
             user1 = {
-                data : newData.data,
+                data : data1,
                 time : date1
             }
             console.log(user1);
